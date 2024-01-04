@@ -7,9 +7,10 @@
 
 <ui:composition template="/templates/page-template.xhtml">
 
-	<ui:define name="pageContent">
+	<ui:define name="content">
 
-		<p:panel header="Zaplanuj swoją własną wycieczkę"> 
+ <!-- 		<p:panel header="Zaplanuj swoją własną wycieczkę"> 
+		
 
 			<p:messages id="msg" />
 
@@ -22,18 +23,30 @@
 					converterMessage="Tytuł: #{txtCalcErr.calcParamIncorrect}" />
 					
 					<p:commandButton value="Dodaj" action="#{tripCtrl.add()}" update="msg" />
+					</h:panelGrid>
+			</h:form>
+			</p:panel> -->
+
+					
+			<h:form>
+    <div class="responsive-grid">
+        <ui:repeat value="#{imagesViewCtrl.images}" var="image" varStatus="loop">
+            <div class="responsive-item">
+                <p:commandLink action="#{imagesViewCtrl.images}">
+					<p:graphicImage value="resources/template/img/#{image}" styleClass="responsive-image" />
+					
+                    <div class="caption">#{imagesViewCtrl.captions[loop.index]}</div>
+                </p:commandLink>
+            </div>
+        </ui:repeat> 
+    </div>
+</h:form>
+					
 					
 
-			</h:panelGrid>
-					<p:imageSwitch effect="FlyIn">
-					    <p:graphicImage value="/resources/template/img/mountain.jpg" />
-					    <p:graphicImage value="/resources/template/img/tripb.jpg" />
-					</p:imageSwitch>
-
 				
-			</h:form>
-
-		</p:panel>
+			
+		
 
 	</ui:define>
 

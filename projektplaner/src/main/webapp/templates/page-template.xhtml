@@ -7,17 +7,18 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/main-template.xhtml">
-
+	<div class="webtitle">
 	<ui:define name="title">
-		#{txtMain.projectName} - #{txtMain.projectTopics}
+		#{txtMain.projectName}
 	</ui:define>
+	</div>
 
 	<ui:define name="content">
 
-		<div class="bottom-space">${txtMain.sampleText}</div>
 
 		<ui:insert name="pageContent"></ui:insert>
-
+		<div class="bottom-space">${txtMain.sampleText}</div>
+		
 	</ui:define>
 	
 </ui:composition>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+
+	<ui:define name="content">
+	<h:form>
+    <p:growl>
+        <p:autoUpdate />
+    </p:growl>
+ 
+    <h:panelGrid columns="2" cellpadding="5">
+ 
+        <h:outputLabel for="menu" value="Basic:" />
+        <p:selectCheckboxMenu id="menu" value="#{tripCreationViewCtrl.selectedCities}" label="Cities"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{tripCreationViewCtrl.cities}" />
+        </p:selectCheckboxMenu>
+ 
+        <h:outputLabel for="multiple" value="Multiple:" />
+        <p:selectCheckboxMenu id="multiple" value="#{tripCreationViewCtrl.selectedCities2}" label="Cities" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <p:ajax event="itemUnselect" listener="#{tripCreationViewCtrl.onItemUnselect}" />
+            <f:selectItems value="#{tripCreationViewCtrl.cities}" />
+        </p:selectCheckboxMenu>
+ 
+        <h:outputLabel for="grouped" value="Grouped:" />
+        <p:selectCheckboxMenu id="grouped" value="#{tripCreationViewCtrl.selectedCars}" label="Cars" multiple="true"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+            <f:selectItems value="#{tripCreationViewCtrl.cars}" />
+        </p:selectCheckboxMenu>
+    </h:panelGrid>
+ 
+    <p:commandButton value="Submit" update="displayItems" oncomplete="PF('itemDialog').show()" style="margin-top:10px;" />
+ 
+    <p:dialog header="Selected Items" modal="true" showEffect="fade" hideEffect="fade" widgetVar="itemDialog" width="250">
+        <p:outputPanel id="displayItems">
+            <p:dataList value="#{tripCreationViewCtrl.selectedCities}" var="city" emptyMessage="No cities selected" style="margin-bottom: 10px;">
+                <f:facet name="header">
+                    Basic
+                </f:facet>
+                #{city}
+            </p:dataList>
+ 
+            <p:dataList value="#{tripCreationViewCtrl.selectedCities2}" var="city" emptyMessage="No cities selected" style="margin-bottom: 10px;">
+                <f:facet name="header">
+                    Multiple
+                </f:facet>
+                #{city}
+            </p:dataList>
+ 
+            <p:dataList value="#{tripCreationViewCtrl.selectedCars}" var="car" emptyMessage="No cars selected">
+                <f:facet name="header">
+                    Grouped
+                </f:facet>
+                #{car}
+            </p:dataList>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
+	

@@ -1,10 +1,13 @@
 package com.jsfcourse.ctrl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 @Named
@@ -30,5 +33,15 @@ public class ImagesViewCtrl {
     }
     public List<String> getCaptions() {
         return captions;
+    }
+    public String navigateToTripCreationView() {
+        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect("tripcreationview.xhtml"); 
+        } catch (IOException e) {
+            e.printStackTrace(); 
+        }
+        return null; 
     }
 }

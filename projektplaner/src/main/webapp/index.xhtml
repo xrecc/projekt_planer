@@ -6,33 +6,16 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/page-template.xhtml">
+             
 
 	<ui:define name="content">
-
- <!-- 		<p:panel header="Zaplanuj swoją własną wycieczkę"> 
-		
-
-			<p:messages id="msg" />
-
-			<h:form id="formularz">
-				<h:panelGrid columns="3" cellpadding="20" styleClass="bottom-space">
-					<p:outputLabel for="idtitle" value="#{txtCalc.valuetitle}:" />
-		
-					<p:inputText id="idtitle" value="#{tripCtrl.title}" required="true"
-					requiredMessage="Tytuł: #{txtCalcErr.calcParamRequired}"
-					converterMessage="Tytuł: #{txtCalcErr.calcParamIncorrect}" />
-					
-					<p:commandButton value="Dodaj" action="#{tripCtrl.add()}" update="msg" />
-					</h:panelGrid>
-			</h:form>
-			</p:panel> -->
-
+	
 					
 			<h:form>
     <div class="responsive-grid">
         <ui:repeat value="#{imagesViewCtrl.images}" var="image" varStatus="loop">
             <div class="responsive-item">
-                <p:commandLink action="#{imagesViewCtrl.images}">
+                <p:commandLink action="#{imagesViewCtrl.navigateToTripCreationView}">
 					<p:graphicImage value="resources/template/img/#{image}" styleClass="responsive-image" />
 					
                     <div class="caption">#{imagesViewCtrl.captions[loop.index]}</div>
@@ -42,11 +25,7 @@
     </div>
 </h:form>
 					
-					
-
-				
-			
-		
+	
 
 	</ui:define>
 

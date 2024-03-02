@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+	
+					
+<h:form>
+    <p:panel id="panel" header="Zaloguj">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="login" value="login:" />
+				<p:inputText id="login" value="#{login.login}"
+					required="true"	requiredMessage="podaj login"/>
+				<p:outputLabel for="pass" value="hasło:" />
+				<p:password id="pass" value="#{login.pass}"
+				required="true"	requiredMessage="podaj hasło"/>
+ 
+        </h:panelGrid>
+         
+        <p:commandButton value="Zaloguj" update="panel" action="#{login.doLogin}" icon="pi pi-check" />
+        <p:commandButton value="Zarejestruj" action="#{register.doRegister}" immediate="true" icon="pi pi-check" />
+    </p:panel>
+    
+</h:form>
+					
+	
+
+	</ui:define>
+
+</ui:composition>
+</html>

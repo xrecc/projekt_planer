@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+
+	<ui:define name="content">
+	 	<h:form>
+    <p:growl>
+        <p:autoUpdate />
+    </p:growl>
+ 
+    <h:panelGrid columns="2" cellpadding="5">
+    
+  
+                <p:outputLabel for="@next" value="Państwo"/>
+                <p:selectOneMenu id="lazy" value="#{tripCreationViewCtrl.selectedOption}" dynamic="true">
+                    <f:selectItem itemLabel="Select One" itemValue=""/>
+                    <f:selectItems value="#{tripCreationViewCtrl.list}"/>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel for="@next" value="Miasto"/>
+                <p:selectOneMenu id="option" value="#{tripCreationViewCtrl.selectedOption}" dynamic="true">
+                    <f:selectItem itemLabel="Select One" itemValue=""/>
+                    <f:selectItems value="#{tripCreationViewCtrl.listc}"/>
+                </p:selectOneMenu>
+
+
+    </h:panelGrid>
+</h:form> 
+
+	</ui:define>
+
+</ui:composition>
+</html>
+	

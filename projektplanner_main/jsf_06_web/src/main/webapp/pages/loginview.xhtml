@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+	
+					
+<h:form styleClass="lgnform">
+    <p:panel id="panel" styleClass="lgnpanel" header="Zaloguj">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid styleClass="lgngrid" columns="2" cellpadding="5">
+				<p:outputLabel for="login" styleClass="lgnout" value="login:" />
+				<p:inputText styleClass="lgnin" id="login" value="#{login.email}"
+					required="true"	requiredMessage="podaj login"/>
+				<p:outputLabel for="pass" styleClass="lgnout" value="hasło:" />
+				<p:password styleClass="lgnin" id="pass" value="#{login.pass}"
+				required="true"	requiredMessage="podaj hasło"/>
+ 
+        </h:panelGrid>
+         
+        <p:commandButton styleClass="lgnbtn" value="Zaloguj" update="panel" action="#{login.doLogin}" />
+        <p:commandButton styleClass="lgnbtn" value="Nie masz konta? Zarejestruj się!" action="#{register.doRegister}" immediate="true" />
+    </p:panel>
+    
+</h:form>
+					
+	
+
+	</ui:define>
+
+</ui:composition>
+</html>

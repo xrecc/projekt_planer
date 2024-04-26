@@ -1,12 +1,5 @@
 package com.jsfcourse.ctrl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
@@ -23,10 +16,9 @@ import com.jsf.entities.User;
 @Named
 @RequestScoped
 public class RegisterViewCtrl {
-	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_LOGIN = "/loginview.xhtml";
-	private static final String PAGE_STAY_AT_THE_SAME = null;
+	private static final String PAGE_LOGIN = "/pages/loginview?faces-redirect=true";
+	private static final String PAGE_STAY = null;
 	
 	
 	@Inject
@@ -38,12 +30,25 @@ public class RegisterViewCtrl {
 	@EJB
 	UserDAO userDAO;
 	
-	private User user;
-	
-	public RegisterViewCtrl() {
-		user = new User();
-		user.setRole("0");
+	private User user = new User();
+	private int phonenumber;
+	private String email;
+
+	public String getEmail() {
+		return email;
 	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(int phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -51,8 +56,19 @@ public class RegisterViewCtrl {
 		this.user = user;
 	}
 	public String newUser() {
+		
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		
+		if(userDAO.userEx(user.getEmail())) {
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Uzytkownik juz istnieje", null));
+			return PAGE_STAY;
+		}else {
+		user.setRole("0");
+		
 		userDAO.create(user);
 		return PAGE_LOGIN;
+		}
 	}
 	
 }

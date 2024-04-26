@@ -40,11 +40,11 @@ public class AdminPanelCtrl {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
         	if (index == 0) {
-            externalContext.redirect("attractionslistview.xhtml"); 
+            externalContext.redirect("/planer/pages/trippages/attractionslistview.xhtml");
         	} else if (index == 1) {
-        		externalContext.redirect("userslistview.xhtml"); 
+        		externalContext.redirect("/planer/pages/admin/userslistview.xhtml"); 
         	} else if (index == 2) {
-        		externalContext.redirect("userslistview.xhtml");
+        		externalContext.redirect("/planer/pages/trippages/triplistview.xhtml");
         	}
         	
         } catch (IOException e) {

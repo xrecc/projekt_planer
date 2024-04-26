@@ -1,8 +1,8 @@
 package com.jsfcourse.ctrl;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -11,17 +11,18 @@ import jakarta.ejb.EJB;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.Flash;
-import jakarta.servlet.http.HttpSession;
 
 import com.jsf.dao.UserDAO;
 import com.jsf.entities.User;
+import java.util.logging.Logger;
 
 @Named
 @RequestScoped
 public class UsersListCtrl {
-	//private static final String PAGE_PERSON_EDIT = "personEdit?faces-redirect=true";
-	//private static final String PAGE_STAY_AT_THE_SAME = null;
+	private static final String PAGE_USER_EDIT = "/userEditGET?faces-redirect=true";
+	private static final String PAGE_STAY_AT_THE_SAME = null;
 
+	
 	private String name;
 		
 	@Inject
@@ -39,26 +40,41 @@ public class UsersListCtrl {
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}  
+
 
 	public List<User> getFullList(){
 		return userDAO.getFullList();
 	}
 
-	public List<User> getList(){
-		List<User> list = null;
+
+	public String newUser(){
+		User user = new User();
 		
-		//1. Prepare search params
-		Map<String,Object> searchParams = new HashMap<String, Object>();
+			
 		
-		if (name != null && name.length() > 0){
-			searchParams.put("name", name);
-		}
+		flash.put("user", user);
 		
-		//2. Get list
-		list = userDAO.getList(searchParams);
+		return PAGE_USER_EDIT;
+	}
+
+	public String editUser(User user){
 		
-		return list;
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+	    Flash flash = facesContext.getExternalContext().getFlash();
+	    
+		flash.put("user", user);
+		return PAGE_USER_EDIT;
+	}
+
+	public String deleteUser(User user){
+		userDAO.remove(user);
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String redirectEditUserGET() {
+		return PAGE_USER_EDIT;
 	}
 
 }

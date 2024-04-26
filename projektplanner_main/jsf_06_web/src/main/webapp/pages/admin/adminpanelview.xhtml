@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+ <ui:composition template="/templates/page-template.xhtml"> 
+             
+
+	<ui:define name="content">
+	<h:form>
+	<p:commandButton styleClass="btn" value="Wyloguj" action="#{login.doLogout}" />
+	<p:commandButton styleClass="btn" value="Home" action="#{actions.goHome}" />
+	</h:form>
+	<h:outputText styleClass="txt"
+		value="Dzień dobry #{remoteClient.details.name}" />
+					
+			<h:form>
+    <div class="responsive-grid">
+        <ui:repeat value="#{adminPanelCtrl.images}" var="image" varStatus="loop">
+            <div class="responsive-item">
+                <p:commandLink action="#{adminPanelCtrl.navigateToAdminSettingsView(loop.index)}">
+					<p:graphicImage value="../../resources/template/img/#{image}" styleClass="responsive-image" />
+					
+                    <div class="caption">#{adminPanelCtrl.captions[loop.index]}</div>
+                </p:commandLink>
+            </div>
+        </ui:repeat> 
+    </div>
+</h:form>
+					
+	
+
+	</ui:define>
+
+</ui:composition>
+</html>

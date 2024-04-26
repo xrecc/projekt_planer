@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:viewParam name="a" value="#{attractionEditGET.attraction.attractionsId}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{attractionEditGET.onLoad()}" />
+</f:metadata>
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+<h:form>
+	<p:commandButton styleClass="btn" value="Wyloguj" action="#{login.doLogout}" />
+	<p:commandButton styleClass="btn" value="Home" action="#{actions.goHome}" />
+	</h:form>
+
+	<p:messages />
+
+<p:panel toggleable="true" header="Edycja rekordu">
+	<h:form rendered="#{attractionEditGET.attraction != null}" style="margin-bottom:1em;">
+		<h:panelGrid columns="8" cellpadding="5">
+
+
+
+			<p:column priority="5">
+				
+					<h:outputText value="Miasto" />
+				
+				<p:inputText id="a-city" value="#{attractionEditGET.attraction.city}"
+					required="true">
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				
+					<h:outputText value="Państwo" />
+				
+				<p:inputText id="a-country" value="#{attractionEditGET.attraction.country}"
+					required="true">
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Nazwa" />
+				
+				<p:inputText id="a-name" value="#{attractionEditGET.attraction.name}"
+					required="true">
+					
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Cena" />
+				
+				<p:inputText id="a-price" value="#{attractionEditGET.attraction.price}"
+					required="true">
+				</p:inputText>
+			</p:column>
+			<p:column>
+				
+					<h:outputText value="Typ atrakcji" />
+				
+				<p:inputText id="a-type" value="#{attractionEditGET.attraction.typeOfAttraction}"
+					required="true">
+				</p:inputText>
+			</p:column>
+						<p:column>
+				
+					<p:outputLabel for="@next" value="Wycieczka"/>
+					
+				<p:selectOneMenu value="#{attractionEditGET.attraction.trip.tripsId}" rendered="#{attractionEditGET.attraction.trip ne null}">
+                    <f:selectItem itemLabel="Wybierz" itemValue=""/>
+                    <f:selectItems value="#{tripsListCtrl.list}" var="t" itemLabel="#{t.title}" itemValue="#{t.tripsId}"/>
+                </p:selectOneMenu>
+					
+
+			</p:column>
+
+</h:panelGrid>
+			<p:commandButton value="Zapisz" action="#{attractionEditGET.saveData()}"
+				style="margin-right: 1em;" update="@form" />
+
+			<p:button value="Anuluj" action="#{attractionEditGET.cancelEdit()}" />
+	</h:form>
+	</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+</html>

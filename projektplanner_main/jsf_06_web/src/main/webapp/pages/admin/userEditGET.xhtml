@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:viewParam name="u" value="#{userEditGET.user.usersId}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{userEditGET.onLoad()}" />
+</f:metadata>
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+<h:form>
+	<p:commandButton styleClass="btn" value="Wyloguj" action="#{login.doLogout}" />
+	<p:commandButton styleClass="btn" value="Home" action="#{actions.goHome}" />
+	</h:form>
+
+	<p:messages />
+
+<p:panel toggleable="true" header="Edycja rekordu">
+	<h:form rendered="#{userEditGET.user != null}" style="margin-bottom:1em;">
+		<h:panelGrid columns="6" cellpadding="5">
+
+
+
+			<p:column priority="5">
+				
+					<h:outputText value="Imię" />
+				
+				<p:inputText id="p-name" value="#{userEditGET.user.name}"
+					required="true">
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				
+					<h:outputText value="Hasło" />
+				
+				<p:inputText id="p-surname" value="#{userEditGET.user.surname}"
+					required="true">
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				
+					<h:outputText value="Email" />
+				
+				<p:inputText id="p-email" value="#{userEditGET.user.email}"
+					required="true">
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Rola" />
+				
+				<p:inputText id="p-role" value="#{userEditGET.user.role}"
+					required="true">
+					
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Numer telefonu" />
+				
+				<p:inputText id="p-phonenumber" value="#{userEditGET.user.phonenumber}"
+					required="true">
+				</p:inputText>
+			</p:column>
+
+
+</h:panelGrid>
+			<p:commandButton value="Zapisz" action="#{userEditGET.saveData()}"
+				style="margin-right: 1em;" update="@form" />
+
+			<p:button value="Anuluj" action="#{userEditGET.cancelEdit()}" />
+	</h:form>
+	</p:panel>
+	</ui:define>
+
+</ui:composition>
+</html>

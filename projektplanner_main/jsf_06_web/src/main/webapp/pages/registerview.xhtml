@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+	
+					
+<h:form styleClass="lgnform">
+    <p:panel id="panel" header="Zarejestruj" styleClass="lgnpanel">
+ 
+        <p:messages id="msgs" />
+ 
+        <h:panelGrid styleClass="lgngrid" columns="3" cellpadding="5">
+            <p:outputLabel for="firstname" styleClass="lgnout" value="Imię:" />
+            <p:inputText id="firstname" styleClass="lgnin" value="#{registerViewCtrl.user.name}" placeholder="Imię" required="true" label="Firstname">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="firstname" display="icon" />
+ 
+            <p:outputLabel for="lastname" styleClass="lgnout" value="Hasło:" />
+            <p:inputText id="lastname" styleClass="lgnin" value="#{registerViewCtrl.user.surname}" type="password" placeholder="Hasło" label="Lastname" required="true">
+                <f:validateLength minimum="3" />              
+            </p:inputText>
+            <p:message for="lastname" display="icon" /> 
+                     
+            <p:outputLabel for="email" styleClass="lgnout" value="Email:" />
+            <p:inputText id="email" styleClass="lgnin" value="#{registerViewCtrl.user.email}" placeholder="Email" label="Email" required="true">
+                <f:validateLength minimum="2" />               
+            </p:inputText>
+            <p:message for="email" display="icon" /> 
+                      
+            <p:outputLabel for="phonenumber" styleClass="lgnout" value="Numer telefonu:" />
+            <p:inputText id="phonenumber" styleClass="lgnin" placeholder="Numer telefonu" value="#{registerViewCtrl.user.phonenumber}" label="Phonenumber" required="true">
+                <f:validateLength minimum="2" />                
+            </p:inputText>
+            <p:message for="phonenumber" display="icon" /> 
+                       
+            <h:inputHidden id="role" value="#{registerViewCtrl.user.role}" />
+ 
+        </h:panelGrid>
+ 
+        <p:commandButton styleClass="lgnbtn" value="Zarejestruj" update="panel" action="#{registerViewCtrl.newUser}" />
+    </p:panel>
+</h:form>
+					
+	
+
+	</ui:define>
+
+</ui:composition>
+</html>

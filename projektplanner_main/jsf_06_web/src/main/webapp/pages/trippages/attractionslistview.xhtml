@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<ui:composition template="/templates/page-template.xhtml">
+             
+
+	<ui:define name="content">
+	<h:form>
+	<p:commandButton styleClass="btn" value="Wyloguj" action="#{login.doLogout}" />
+	<p:commandButton styleClass="btn" value="Home" action="#{actions.goHome}" />
+	</h:form>
+
+	<p:panel header="Opcje wyszukiwania i tworzenie atrakcji" toggleable="true" collapsed="true"
+		style="margin-bottom: 1em;">
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel value="name:" />
+				<p:inputText value="#{lazyView.name}" />
+				<p:commandButton value="Szukaj" update="form-table" />
+			</h:panelGrid>
+		</h:form>
+					<h:form styleClass="lgnform" rendered="#{remoteClient.details.role eq '1'}">
+    <p:panel id="panel" header="Stwórz wycieczkę" styleClass="lgnpanel">
+		<h:panelGrid columns="8" cellpadding="5">
+
+
+
+			<p:column priority="5">
+				
+					<h:outputText value="Miasto" />
+				
+				<p:inputText id="a-city" value="#{attractionsListCtrl.attraction.city}"
+					required="true">
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				
+					<h:outputText value="Państwo" />
+				
+				<p:inputText id="a-country" value="#{attractionsListCtrl.attraction.country}"
+					required="true">
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Nazwa" />
+				
+				<p:inputText id="a-name" value="#{attractionsListCtrl.attraction.name}"
+					required="true">
+					
+				</p:inputText>
+			</p:column>
+			
+			<p:column>
+				
+					<h:outputText value="Cena" />
+				
+				<p:inputText id="a-price" value="#{attractionsListCtrl.attraction.price}"
+					required="true">
+				</p:inputText>
+			</p:column>
+			<p:column>
+				
+					<h:outputText value="Typ atrakcji" />
+				
+				<p:inputText id="a-type" value="#{attractionsListCtrl.attraction.typeOfAttraction}"
+					required="true">
+				</p:inputText>
+			</p:column>
+				
+
+</h:panelGrid>
+			<p:commandButton styleClass="lgnbtn" value="Stwórz atrakcje" update="panel" action="#{attractionsListCtrl.newAttraction}" />
+</p:panel>
+</h:form>
+	</p:panel>
+
+	<p:messages />
+
+	<h:form id="form-table" style="margin-bottom:1em;">
+
+
+		<p:dataTable value="#{lazyView.lazyAttractions}" var="a" paginator="true" rows="10" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" lazy="true">
+
+			<p:column priority="5">
+				<f:facet name="header">
+					<h:outputText value="miasto" />
+				</f:facet>
+				<h:outputText value="#{a.city}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="państwo" />
+				</f:facet>
+				<h:outputText value="#{a.country}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="nazwa" />
+				</f:facet>
+				<h:outputText value="#{a.name}" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="cena" />
+				</f:facet>
+				<h:outputText value="#{a.price}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="typ atrakcji" />
+				</f:facet>
+				<h:outputText value="#{a.typeOfAttraction}" />
+			</p:column>
+			
+			<p:column rendered="#{remoteClient.details.role eq '1'}">
+				<f:facet name="header">
+					<h:outputText value="opcje" />
+				</f:facet>
+			<p:button outcome="/pages/admin/attractionEditGET" value="Edytuj">
+					<f:param name="a" value="#{a.attractionsId}" />
+			</p:button>
+				
+			<p:commandButton value="Usuń"
+					action="#{attractionsListCtrl.deleteAttraction(a)}" update="@form" />
+
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

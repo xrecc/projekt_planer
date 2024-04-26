@@ -1,17 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
+
 body{
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+font-family: "Lucida Console", Monaco, monospace;
+font-size: 36px;
+letter-spacing: 1.2px;
+word-spacing: 6px;
+color: #000000;
+font-weight: 700;
+text-decoration: none solid rgb(68, 68, 68);
+font-style: normal;
+font-variant: small-caps;
+text-transform: capitalize;
 	/*background: url("../img/plane.png.jsf?ln=template") no-repeat center center fixed;*/
-	background-color: #ffcfff;
+	background: rgb(23,23,23);
+background: -moz-linear-gradient(37deg, rgba(23,23,23,1) 0%, rgba(75,75,75,1) 35%, rgba(116,114,114,1) 76%, rgba(172,172,172,1) 100%);
+background: -webkit-linear-gradient(37deg, rgba(23,23,23,1) 0%, rgba(75,75,75,1) 35%, rgba(116,114,114,1) 76%, rgba(172,172,172,1) 100%);
+background: linear-gradient(37deg, rgba(23,23,23,1) 0%, rgba(75,75,75,1) 35%, rgba(116,114,114,1) 76%, rgba(172,172,172,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#171717",endColorstr="#acacac",GradientType=1);
 	background-size: cover;
 	margin:0;
+	height: 100vh;
+	overflow-x: hidden;
 }
 
 .bottom-space{
-	margin-bottom: 1em;
+	margin-bottom: 5em;
 }
 
 .top-space{
-	margin-top: 1em;
+	margin-top: 5em;
 }
 
 #page_wrapper{
@@ -23,6 +40,28 @@ body{
 /*.webtitle{
 	top:50px;
 }*/
+.footer {
+            background-color: #212121;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+        .header {
+            background-color: #212121;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
 .responsive-grid {
         display: flex;
         flex-wrap: wrap;
@@ -46,6 +85,7 @@ body{
 
     .responsive-item:hover .responsive-image {
         transform: scale(1.1);
+        transform : translateY(-35px) !important;
     }
 
     .caption {
@@ -59,10 +99,99 @@ body{
         color: #fff;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         font-size: 24px;
-        border: 6px solid #fff;
+        border: 1px solid #fff;
         border-radius: 0px;
     }
 
+.btn{
 
+font-family: Roboto, sans-serif !important;
+font-weight: 500 !important;
+font-size: 14px !important;
+color: #fff !important;
+background: linear-gradient(90deg, #6a6c6e 0%, #292929 100%) !important;
+padding: 10px 17px !important;
+border: solid #000000 1px !important;
+box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px !important;
+border-radius: 50px !important;
+transition : 1000ms !important;
+transform: translateY(0) !important;
+display: flex !important;
+flex-direction: row !important;
+align-items: center !important;
+cursor: pointer !important;
+text-transform: uppercase !important;
+float: right !important;
+margin-left: 10px !important;
+}
 
+.btn:hover{
+
+transition : 1000ms !important;
+padding: 10px 43px !important;
+transform : translateY(-35px) !important;
+background: linear-gradient(90deg, #6a6c6e 0%, #292929 100%) !important;
+color: #ccced1 !important;
+border: solid 1px #8f8f8f !important;
+}
+
+.txt{
+	font-size: 70px;
+}
+
+.lgnform{
+	opacity: 1 !important;
+	width: 100% !important;
+  min-width: 30rem !important;
+  height: auto !important;
+}
+.lgnpanel{
+	font-size: 25px !important;
+  font-weight: 500 !important;
+  margin-left: 10px !important;
+  text-transform: uppercase !important;
+  color: main !important;
+}
+
+.lgnout{
+	  text-transform: capitalize !important;
+  	opacity: 0.3 !important;
+  	font-size: 25px !important;
+  	font-weight: 500 !important;
+  	color: black !important;
+}
+
+.lgnin{
+	height: 100px !important;
+  background-color: white !important;
+  border: 1px solid #efefef !important;
+  border-bottom: 1px solid #efefef !important;
+  outline: none !important;
+  font-size: 25px !important;
+  user-select: text !important;
+}
+.lgngrid{
+	width: 100% !important;
+  box-shadow: 0 30px 30px 0 rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  padding: 10px !important;
+}
+.lgnbtn{
+	background: linear-gradient(90deg, #6a6c6e 0%, #292929 100%) !important;
+  opacity: 0.6 !important;
+  width: 100% !important;
+  height: 60px !important;
+  font-size: 25px !important;
+  text-transform: uppercase !important;
+  color: white !important;
+  cursor: pointer !important;
+  outline: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-top: 20px !important;
+  opacity: 0.5s ease !important;
+}
+ .lgnbtn:hover {
+    opacity: 1 !important;
+}
 

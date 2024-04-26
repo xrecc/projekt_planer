@@ -3,6 +3,9 @@ package jakarta.faces.simplesecurity;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.logging.Logger;
+
+import com.jsf.entities.User;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -29,7 +32,7 @@ public class SecurityFilter implements Filter {
 
 	private static final String FACES_REDIRECT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ "<partial-response><redirect url=\"%s\"></redirect></partial-response>";
-
+	
 	/**
 	 * The method loads parameters specifying paths of login page (no permission
 	 * page), permissions and automatic session invalidate (on host, address or port
@@ -80,7 +83,7 @@ public class SecurityFilter implements Filter {
 		// load no permission page
 		noPermitionPage = config.getInitParameter("noPermitionPage");
 		if (noPermitionPage == null) {
-			noPermitionPage = "/login.xhtml";
+			noPermitionPage = "/pages/loginview.xhtml";
 		}
 		publicResources.add(noPermitionPage);
 		// load auto invalidate configuration
@@ -117,9 +120,10 @@ public class SecurityFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession();
 
-		// load RemoteClient object from session
-		RemoteClient client = RemoteClient.load(session);
+        // load RemoteClient object from session
+        RemoteClient client = RemoteClient.load(session);
 
+		
 		boolean pass = false;
 
 		String path = request.getServletPath();// path of requested resource (without host, port and app name)

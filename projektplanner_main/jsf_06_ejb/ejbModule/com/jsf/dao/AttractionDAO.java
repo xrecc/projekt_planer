@@ -1,14 +1,18 @@
 package com.jsf.dao;
 
 import java.util.List;
+//import java.util.Map;
 import java.util.Map;
 
 import jakarta.ejb.Stateless;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 import com.jsf.entities.Attraction;
+
 
 //DAO - Data Access Object for Person entity
 //Designed to serve as an interface between higher layers of application and data.
@@ -51,73 +55,82 @@ public class AttractionDAO {
 
 		return list;
 	}
-
-	public List<Attraction> getList(Map<String, Object> searchParams) {
-		List<Attraction> list = null;
-
-		// 1. Build query string with parameters
-		String select = "select a ";
-		String from = "from Attraction a ";
-		String where = "";
-		String orderby = "order by a.country asc";
-
-		// search for name
-		String name = (String) searchParams.get("name");
-		if (name != null) {
-			if (where.isEmpty()) {
-				where = "where ";
-			} else {
-				where += "and ";
-			}
-			where += "a.name like :name or a.city like :name or a.country like :name ";
-		}
-		
-		// ... other parameters ... 
-
-		// 2. Create query object
-		Query query = em.createQuery(select + from + where + orderby);
-
-		// 3. Set configured parameters
-		if (name != null) {
-			query.setParameter("name", name+"%");
-		}
-
-		// ... other parameters ... 
-
-		// 4. Execute query and retrieve list of Person objects
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
+	
+	public List<Attraction> findByTripID(Integer tripID){
+		Query query = em.createQuery("select a from Attraction a WHERE a.trip.tripsId = :tripID");
+		query.setParameter("tripID", tripID);
+		return query.getResultList();
 	}
-	public List<Attraction> getCountryList() {
-		List<Attraction> list = null;
 
-		Query query = em.createQuery("select distinct a.country from Attraction a");
 
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<Attraction> getAttractions(int offset, int pageSize, Map<String, Object> searchParams) {
+    	List<Attraction> list = null;
+    	
+    	String select = "select a ";
+    	String from = "from Attraction a ";
+    	String where = "";
+    	
+    	String name = (String) searchParams.get("name");
+    	if (name != null) {
+    		if (where.isEmpty()) {
+    			where = "where ";
+    		}else {
+    			where += "and ";
+    		}
+    		where += "a.name like :name or a.city like :name or a.country like :name ";
+    	}
+    	Query query = em.createQuery(select + from + where);
+		query.setFirstResult(offset); 
+        query.setMaxResults(pageSize); 
+    	
+    	if(name !=null) {
+    		query.setParameter("name", name+"%");
 
-		return list;
-	}
-	public List<Attraction> getCityList() {
-		List<Attraction> listc = null;
-
-		Query query = em.createQuery("select distinct a.city from Attraction a");
-
-		try {
-			listc = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return listc;
-	}
+    	}
+    	
+//        TypedQuery<Attraction> query = em.createQuery("SELECT a FROM Attraction a", Attraction.class);
+//        query.setFirstResult(offset); 
+//        query.setMaxResults(pageSize); 
+        
+        list = query.getResultList();
+        return list;
+    }
+	public List<Attraction> getAttractionsTrips(int offset, int pageSize, List<Attraction> listat) {
+    	List<Attraction> list = null;
+    	   	
+    	
+        TypedQuery<Attraction> query = em.createQuery("SELECT a FROM Attraction a WHERE a.trip.tripsId = :tripId", Attraction.class);
+        query.setParameter("tripId", listat);
+        query.setFirstResult(offset); 
+        query.setMaxResults(pageSize); 
+        
+        list = query.getResultList();
+        return list;
+    }
+    public long getAttractionsTotalCount(Map<String, Object> searchParams) {
+    	long count = 0;
+       // TypedQuery<Long> query = em.createQuery("select count(a) from Attraction a", Long.class);
+       	String select = "select count(a) ";
+    	String from = "from Attraction a ";
+    	String where = "";
+    	
+    	String name = (String) searchParams.get("name");
+    	if (name != null) {
+    		if (where.isEmpty()) {
+    			where = "where ";
+    		}else {
+    			where += "and ";
+    		}
+    		where += "a.name like :name or a.city like :name or a.country like :name ";
+    	}
+    	Query query = em.createQuery(select + from + where);
+    	
+    	if(name !=null) {
+    		query.setParameter("name", name+"%");
+    	}
+        count = (long) query.getSingleResult();
+        return count;
+    }
+    
 
 }

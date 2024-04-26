@@ -23,7 +23,7 @@ import jakarta.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="trips")
+@Table(name="trip")
 @NamedQuery(name="Trip.findAll", query="SELECT t FROM Trip t")
 public class Trip implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,11 +31,7 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="trips_id")
-	private int tripsId;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name="created_at")
-	private Date createdAt;
+	private Integer tripsId;
 
 	@Temporal(TemporalType.DATE)
 	private Date timeend;
@@ -57,21 +53,14 @@ public class Trip implements Serializable {
 	public Trip() {
 	}
 
-	public int getTripsId() {
+	public Integer getTripsId() {
 		return this.tripsId;
 	}
 
-	public void setTripsId(int tripsId) {
+	public void setTripsId(Integer tripsId) {
 		this.tripsId = tripsId;
 	}
 
-	public Date getCreatedAt() {
-		return this.createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
 
 	public Date getTimeend() {
 		return this.timeend;
@@ -123,8 +112,8 @@ public class Trip implements Serializable {
 		return this.user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(User userId) {
+		this.user = userId;
 	}
 
 }

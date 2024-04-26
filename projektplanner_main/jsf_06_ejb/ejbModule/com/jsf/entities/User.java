@@ -9,11 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import com.jsf.entities.User;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,7 +27,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="users_id")
-	private int usersId;
+	private Integer usersId;
 
 	private String email;
 
@@ -49,11 +46,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public int getUsersId() {
+	public Integer getUsersId() {
 		return this.usersId;
 	}
 
-	public void setUsersId(int usersId) {
+	public void setUsersId(Integer usersId) {
 		this.usersId = usersId;
 	}
 
@@ -106,18 +103,18 @@ public class User implements Serializable {
 		this.trips = trips;
 	}
 
-	public Trip addTrip(Trip trip) {
-		getTrips().add(trip);
-		trip.setUser(this);
-
-		return trip;
-	}
-
-	public Trip removeTrip(Trip trip) {
-		getTrips().remove(trip);
-		trip.setUser(null);
-
-		return trip;
-	}
+//	public Trip addTrip(Trip trip) {
+//		getTrips().add(trip);
+//		trip.setUser(this);
+//
+//		return trip;
+//	}
+//
+//	public Trip removeTrip(Trip trip) {
+//		getTrips().remove(trip);
+//		trip.setUser(null);
+//
+//		return trip;
+//	}
 
 }

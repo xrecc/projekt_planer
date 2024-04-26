@@ -33,11 +33,13 @@ public class UserDAO {
 	}
 
 	public void remove(User user) {
+		em.createNativeQuery("SET FOREIGN_KEY_CHECKS=0").executeUpdate();
 		em.remove(em.merge(user));
+		em.createNativeQuery("SET FOREIGN_KEY_CHECKS=1").executeUpdate();
 	}
 
-	public User find(Object userId) {
-		return em.find(User.class, userId);
+	public User find(Object usersId) {
+		return em.find(User.class, usersId);
 	}
 	
 
@@ -54,94 +56,25 @@ public class UserDAO {
 
 		return list;
 	}
+	public boolean userEx(String email) {
 
-	public List<User> getList(Map<String, Object> searchParams) {
-		List<User> login = null;
-
-		// 1. Build query string with parameters
-		String select = "select u ";
-		String from = "from User u ";
-		String where = "";
-		String orderby = "order by u.name asc";
-
-		// search for name
-		String name = (String) searchParams.get("name");
-		if (name != null) {
-			if (where.isEmpty()) {
-				where = "where ";
-			} else {
-				where += "and ";
-			}
-			where += "u.name like :name ";
-		}
+		Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email", User.class);
 		
-		// ... other parameters ... 
+		query.setParameter("email", email);
 
-		// 2. Create query object
-		Query query = em.createQuery(select + from + where + orderby);
+		
+		Long count = (Long) query.getSingleResult();
+		
 
-		// 3. Set configured parameters
-		if (name != null) {
-			query.setParameter("name", name+"%");
-		}
-
-		// ... other parameters ... 
-
-		// 4. Execute query and retrieve list of Person objects
-		try {
-			login = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return login;
+		return count > 0;
 	}
-//	public List<User> getPassword(Map<String, Object> searchParams) {
-//		List<User> password = null;
-//
-//		// 1. Build query string with parameters
-//		String select = "select u ";
-//		String from = "from User u ";
-//		String where = "";
-//		String orderby = "order by u.surname asc";
-//
-//		// search for name
-//		String surname = (String) searchParams.get("surname");
-//		if (surname != null) {
-//			if (where.isEmpty()) {
-//				where = "where ";
-//			} else {
-//				where += "and ";
-//			}
-//			where += "u.name like :name or u.surname like :surname or u.email like :email or u.phonenumber like :phonenumber ";
-//		}
-//		
-//		// ... other parameters ... 
-//
-//		// 2. Create query object
-//		Query query = em.createQuery(select + from + where + orderby);
-//
-//		// 3. Set configured parameters
-//		if (surname != null) {
-//			query.setParameter("surname", surname+"%");
-//		}
-//
-//		// ... other parameters ... 
-//
-//		// 4. Execute query and retrieve list of Person objects
-//		try {
-//			password = query.getResultList();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return password;
-//	}
-public User getUserFromDatabase(String login, String pass) {
+
+
+public User getUserFromDatabase(String email, String pass) {
 		try {
-			TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.name = :name AND u.surname = :surname", User.class);
+			TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.surname = :surname", User.class);
 			
-			query.setParameter("name", login);
+			query.setParameter("email", email);
 			query.setParameter("surname", pass);
 			
 			User user = query.getSingleResult();
@@ -149,12 +82,11 @@ public User getUserFromDatabase(String login, String pass) {
 			return user;
 			
 		} catch (Exception e) {
-			System.out.println("Nieprawidłowe hasło lub login");
+			System.out.println("Nieprawidłowe hasło lub email");
 		}
 		return null;
 	}
 
-	// simulate retrieving roles of a User from DB
 	public List<String> getUserRolesFromDatabase(User user) {
 		
 		ArrayList<String> roles = new ArrayList<String>();
@@ -168,4 +100,63 @@ public User getUserFromDatabase(String login, String pass) {
 		
 		return roles;
 	}
+    public List<User> getUsers(int offset, int pageSize, Map<String, Object> searchParams) {
+    	List<User> list = null;
+    	
+    	String select = "select u ";
+    	String from = "from User u ";
+    	String where = "";
+    	
+    	String name = (String) searchParams.get("name");
+    	if (name != null) {
+    		if (where.isEmpty()) {
+    			where = "where ";
+    		}else {
+    			where += "and ";
+    		}
+    		where += "u.name like :name or u.email like :name ";
+    	}
+    	Query query = em.createQuery(select + from + where);
+		query.setFirstResult(offset); 
+        query.setMaxResults(pageSize); 
+        
+    	if(name !=null) {
+    		query.setParameter("name", name+"%");
+
+    	}
+//    public List<User> getUsers(int offset, int pageSize) {
+//    	List<User> list = null;
+//    	
+//      TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+//    	
+//    		query.setFirstResult(offset); 
+//            query.setMaxResults(pageSize); 
+//
+//    
+        list = query.getResultList();
+        return list;
+    }
+    public long getUserTotalCount(Map<String, Object> searchParams) {
+    	long count = 0;
+       // TypedQuery<Long> query = em.createQuery("select count(u) from User u", Long.class);
+    	String select = "select count(u) ";
+    	String from = "from User u ";
+    	String where = "";
+    	
+    	String name = (String) searchParams.get("name");
+    	if (name != null) {
+    		if (where.isEmpty()) {
+    			where = "where ";
+    		}else {
+    			where += "and ";
+    		}
+    		where += "u.name like :name or u.email like :name ";
+    	}
+    	Query query = em.createQuery(select + from + where);
+    	if(name !=null) {
+    		query.setParameter("name", name+"%");
+    	}
+        count = (long) query.getSingleResult();
+        return count;
+    }
 }

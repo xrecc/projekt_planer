@@ -27,7 +27,7 @@ public class Attraction implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="attractions_id")
-	private int attractionsId;
+	private Integer attractionsId;
 
 	private String city;
 
@@ -38,7 +38,7 @@ public class Attraction implements Serializable {
 
 	private String name;
 
-	private double price;
+	private Double price;
 
 	@Column(name="type_of_attraction")
 	private String typeOfAttraction;
@@ -51,11 +51,11 @@ public class Attraction implements Serializable {
 	public Attraction() {
 	}
 
-	public int getAttractionsId() {
+	public Integer getAttractionsId() {
 		return this.attractionsId;
 	}
 
-	public void setAttractionsId(int attractionsId) {
+	public void setAttractionsId(Integer attractionsId) {
 		this.attractionsId = attractionsId;
 	}
 
@@ -91,11 +91,11 @@ public class Attraction implements Serializable {
 		this.name = name;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

@@ -11,26 +11,28 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import com.jsf.dao.TripDAO;
 import com.jsf.dao.UserDAO;
 import com.jsf.entities.User;
+
 
 @Named
 @RequestScoped
 public class Login {
-	private static final String PAGE_MAIN = "/index.xhtml";
-	private static final String PAGE_LOGIN = "/loginview.xhtml";
-	private static final String PAGE_REGISTER = "/registerview.xhtml";
+	private static final String PAGE_MAIN = "/pages/trippages/index.xhtml";
+	private static final String PAGE_LOGIN = "/pages/loginview.xhtml";
+	private static final String PAGE_REGISTER = "/pages/registerview.xhtml";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	private String login;
+
 	private String pass;
+	private String email;
 
-	public String getLogin() {
-		return login;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setLogin(String login) {
-		this.login = login;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPass() {
@@ -43,38 +45,40 @@ public class Login {
 
 	@Inject
 	UserDAO userDAO;
+	TripDAO tripDAO;
 
 	public String doLogin() throws Exception {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
-		// 1. verify login and password - get User from "database"
-		User user = userDAO.getUserFromDatabase(login, pass);
 
-		// 2. if bad login or password - stay with error info
+		User user = userDAO.getUserFromDatabase(email, pass);
+		
+
 		if (user == null) {
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Niepoprawny login lub hasło", null));
+					"Niepoprawny email lub hasło", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
-
-		// 3. if logged in: get User roles, save in RemoteClient and store it in session
 		
-		RemoteClient<User> client = new RemoteClient<User>(); //create new RemoteClient
+
+		
+		RemoteClient<User> client = new RemoteClient<User>(); 
 		client.setDetails(user);
 		
-		List<String> roles = userDAO.getUserRolesFromDatabase(user); //get User roles 
+
 		
-		if (roles != null) { //save roles in RemoteClient
+		List<String> roles = userDAO.getUserRolesFromDatabase(user); 
+		
+		if (roles != null) { 
 			for (String role: roles) {
 				client.getRoles().add(role);
 			}
 		}
+		
 	
-		//store RemoteClient with request info in session (needed for SecurityFilter)
 		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
 		client.store(request);
 
-		// and enter the system (now SecurityFilter will pass the request)
 		return PAGE_MAIN;
 	}
 	
@@ -82,9 +86,7 @@ public class Login {
 	public String doLogout(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
-		//Invalidate session
-		// - all objects within session will be destroyed
-		// - new session will be created (with new ID)
+
 		session.invalidate();
 		return PAGE_LOGIN;
 	}
